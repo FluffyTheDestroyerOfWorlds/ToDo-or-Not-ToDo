@@ -19,25 +19,32 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YaP-Db-Wsu">
-                                <rect key="frame" x="0.0" y="0.0" width="580" height="44"/>
-                                <items>
-                                    <navigationItem title="Title" id="vFE-bx-SfR">
-                                        <rightBarButtonItems>
-                                            <barButtonItem title="Help" id="cXO-iN-3eD"/>
-                                            <barButtonItem title="+" id="7J7-lr-j0P"/>
-                                        </rightBarButtonItems>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Zdr-jg-pB1">
-                                <rect key="frame" x="117" y="246" width="240" height="128"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Zdr-jg-pB1">
+                                <rect key="frame" x="20" y="44" width="560" height="512"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <outlet property="dataSource" destination="BYZ-38-t0r" id="jae-QK-itf"/>
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="5ci-iK-99a"/>
                                 </connections>
                             </tableView>
+                            <navigationBar contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YaP-Db-Wsu">
+                                <rect key="frame" x="0.0" y="0.0" width="580" height="44"/>
+                                <items>
+                                    <navigationItem title="Title" id="vFE-bx-SfR">
+                                        <rightBarButtonItems>
+                                            <barButtonItem title="Help" id="cXO-iN-3eD"/>
+                                            <barButtonItem title="+" id="7J7-lr-j0P">
+                                                <connections>
+                                                    <action selector="btnAdd:" destination="BYZ-38-t0r" id="7b0-Lj-9nf"/>
+                                                </connections>
+                                            </barButtonItem>
+                                        </rightBarButtonItems>
+                                    </navigationItem>
+                                </items>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="aRM-eU-qLr"/>
+                                </connections>
+                            </navigationBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -53,12 +60,13 @@
                     <toolbarItems/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="navBar" destination="vFE-bx-SfR" id="4wj-cs-OlG"/>
                         <outlet property="tableView1" destination="Zdr-jg-pB1" id="BIZ-AX-lZk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="305" y="399"/>
+            <point key="canvasLocation" x="906" y="23"/>
         </scene>
     </scenes>
 </document>

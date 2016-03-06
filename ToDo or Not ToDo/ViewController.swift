@@ -11,6 +11,7 @@ import UIKit
 class ViewController: UIViewController , UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var tableView1: UITableView!
+    @IBOutlet weak var navBar: UINavigationItem!
     
     private var dwarves = [
         "Sleepy", "Sneezy", "Bashful", "Happy",
@@ -26,7 +27,7 @@ class ViewController: UIViewController , UITableViewDelegate, UITableViewDataSou
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        navBar.title = "ToDo List"
         // add Gesture Long Press for moving and sorting list
         let longpress = UILongPressGestureRecognizer(target: self, action: "longPressGestureRecognized:")
         tableView1.addGestureRecognizer(longpress)
@@ -44,6 +45,35 @@ class ViewController: UIViewController , UITableViewDelegate, UITableViewDataSou
     }
 
 
+   
+    @IBAction func btnAdd(sender: AnyObject) {
+        
+        let alert = UIAlertController(title: "New List Item", message: "Add a list item",preferredStyle: .Alert)
+        
+        let saveAction = UIAlertAction(title: "Save", style: .Default,handler: { (action:UIAlertAction) -> Void in
+                
+                let textField = alert.textFields!.first
+                self.dwarves.append(textField!.text!)
+                self.tableView1.reloadData()
+        })
+        
+        let cancelAction = UIAlertAction(title: "Cancel",
+            style: .Default) { (action: UIAlertAction) -> Void in
+        }
+        
+        alert.addTextFieldWithConfigurationHandler {
+            (textField: UITextField) -> Void in
+        }
+        
+        alert.addAction(saveAction)
+        alert.addAction(cancelAction)
+        
+        presentViewController(alert,
+            animated: true,
+            completion: nil)
+        }
+    
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dwarves.count
     }
@@ -62,12 +92,47 @@ class ViewController: UIViewController , UITableViewDelegate, UITableViewDataSou
     }
     
     func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
-        if indexPath.row == 0 {return nil
-        } else if (indexPath.row % 2 == 0){
-            return NSIndexPath(forRow: 1, inSection: indexPath.section)
-        } else {
-            return indexPath
+  //      if indexPath.row == 0 {return nil
+  //      } else if (indexPath.row % 2 == 0){
+  //          return NSIndexPath(forRow: 1, inSection: indexPath.section)
+  //      } else {
+  //          return indexPath
+  //      }
+        
+        let alert = UIAlertController(title: "Modify \(self.dwarves[indexPath.row])", message: "Modify or Delete a list item",preferredStyle: .Alert)
+       
+            let saveAction = UIAlertAction(title: "Save", style: .Default,handler: { (action:UIAlertAction) -> Void in
+            
+            let textField = alert.textFields!.first
+            self.dwarves[indexPath.row]   =  (textField!.text!)
+            self.tableView1.reloadData()
+        })
+        
+        let deleteAction = UIAlertAction(title: "Delete",
+            style: .Default) { (action: UIAlertAction) -> Void in
+            self.dwarves.removeAtIndex(indexPath.row)
+            self.tableView1.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
         }
+        
+        let cancelAction = UIAlertAction(title: "Cancel",
+            style: .Default) { (action: UIAlertAction) -> Void in
+        }
+
+        
+        alert.addTextFieldWithConfigurationHandler {
+            (textField: UITextField) -> Void in
+        }
+        
+        alert.addAction(saveAction)
+        alert.addAction(deleteAction)
+        alert.addAction(cancelAction)
+        
+        presentViewController(alert,
+            animated: true,
+            completion: nil)
+        
+ //       tableView1.reloadData()
+        return nil
     }
             
     
@@ -81,7 +146,7 @@ class ViewController: UIViewController , UITableViewDelegate, UITableViewDataSou
             let swipedcell:UITableViewCell = self.tableView1.cellForRowAtIndexPath(swipedIndexPath)!
             var attrString = NSAttributedString()
             
-            print(swipeGesture.direction)
+           
             
             if swipeGesture.direction == UISwipeGestureRecognizerDirection.Right {
                 // add to strikeout tableview1 cell 
